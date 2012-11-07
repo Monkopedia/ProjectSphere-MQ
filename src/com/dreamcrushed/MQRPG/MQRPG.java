@@ -10,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.dreamcrushed.MQRPG.Command.AbilityCommand;
 import com.dreamcrushed.MQRPG.Command.DebugCommand;
 import com.dreamcrushed.MQRPG.Command.PlayerCommand;
+import com.dreamcrushed.MQRPG.Listener.AttackListenerManager;
+import com.dreamcrushed.MQRPG.Listener.DefendListenerManager;
 import com.theminequest.MineQuest.API.Managers;
 
 public class MQRPG extends JavaPlugin {
@@ -22,6 +24,9 @@ public class MQRPG extends JavaPlugin {
 	public static ExhaustionCostManager costManager;
 	
 	public static Map<String, BindManager> binding;
+	
+	public static DefendListenerManager defendListeners;
+	public static AttackListenerManager attackListeners;
 	
 	public static BindManager getBindings(String player) {
 		return binding.get(player);
@@ -45,6 +50,11 @@ public class MQRPG extends JavaPlugin {
 		costManager = new ExhaustionCostManager(500);
 		
 		getServer().getPluginManager().registerEvents(new BindingListener(), this);
+
+		defendListeners = new DefendListenerManager();
+		getServer().getPluginManager().registerEvents(defendListeners, this);
+		attackListeners = new AttackListenerManager();
+		getServer().getPluginManager().registerEvents(attackListeners, this);
 		
 		Managers.getStatisticManager().registerStatistic(AbilityStatistic.class);
 		commands = new ArrayList<PlayerCommand>();

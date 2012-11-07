@@ -41,14 +41,12 @@ public class BindingListener implements Listener {
 	public void onEntityDamagedByEntityEvent(EntityDamageByEntityEvent event) {
 		if (event.getDamager() instanceof Player) {
 			Player p = (Player)event.getDamager();
-			System.out.println("Damage: " + p.getName());
 			handleEvent(p, event);
 		} else if (event.getDamager() instanceof Arrow) {
 			Arrow arrow = (Arrow)event.getDamager();
 			
 			if (arrow.getShooter() instanceof Player) {
 				Player p = (Player)arrow.getShooter();
-				System.out.println("Damage Arrow: " + p.getName());
 				handleEvent(p, event);
 			}
 		}
@@ -73,10 +71,8 @@ public class BindingListener implements Listener {
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
 		
 		if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-			System.out.println("Right: " + event.getPlayer().getName());
 			handleEvent(BindingType.RIGHT, event);
 		} else if ((event.getAction() == Action.LEFT_CLICK_AIR) || (event.getAction() == Action.LEFT_CLICK_BLOCK)) {
-			System.out.println("Left: " + event.getPlayer().getName());
 			if (event.isCancelled()) return;
 			handleEvent(BindingType.LEFT, event);
 		}
